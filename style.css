@@ -42,6 +42,7 @@ h1, h2, h3 {
 .metric-holder {
 	border: 5px solid black;
 	text-align: center;
+	position: relative;
 }
 
 .metric-text-title {
@@ -51,6 +52,37 @@ h1, h2, h3 {
 
 .metric-text {
 	fill: rgb(255, 255, 255);
+}
+
+.metric-holder .metric-tool-tip {
+	visibility: hidden;
+	width: 250px;
+	background-color: black;
+  	color: #fff;
+  	text-align: center;
+  	border-radius: 6px;
+  	padding: 5px 0;
+
+  	/* Position the tooltip */
+  	position: absolute;
+  	z-index: 1;
+  	top: 115%;
+  	left: 50%;
+  	margin-left: -90px;
+}
+
+.metric-holder .metric-tool-tip::after {
+  content: " ";
+  position: absolute;
+  bottom: 100%; /* At the bottom of the tooltip */
+  left: 40%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent transparent black transparent;}
+
+.metric-holder:hover .metric-tool-tip{
+  visibility: visible;
 }
 
 /*----------- Visulations -----------*/
