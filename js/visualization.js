@@ -1,3 +1,9 @@
+//read in data
+d3.csv("data/crypto_data.csv").then((data) => {
+      console.log(data);
+});
+
+
 // set the dimensions and margins of the graph
 const width = 450,
     height = 450,
