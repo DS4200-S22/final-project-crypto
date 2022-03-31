@@ -90,9 +90,27 @@ d3.csv("data/crypto_data.csv").then((data) => {
         })
 
   //----------------------------------------------------  Info Table 
+
+  /*
+  Code by Shawn Allen (@shawnbot) repro'd in d3noob's book,
+  http://www.d3noob.org/2013/02/add-html-table-to-your-d3js-graph.html,
+  but with minor modification by Lynn.
+  */
+
+  // functtion to help round the numbers
+  function roundHelper(value) {
+      let rounded = Math.round(value * 100) / 10;
+      if (isNaN(rounded)) {
+        return value;
+      } else {
+        return rounded;
+      }
+  }
+
   // The table generation function
   function tabulate(data, columns, columns_names) {
-      var table = d3.select("#info-table").append("table")
+      //add table to #info-table div
+      let table = d3.select("#info-table").append("table")
               .attr("style", "margin-left: 0"),
           thead = table.append("thead"),
           tbody = table.append("tbody");
@@ -103,30 +121,36 @@ d3.csv("data/crypto_data.csv").then((data) => {
           .data(columns_names)
           .enter()
           .append("th")
-              .text(function(column) { return column; });
+              .text(function(column) { return column; })
+              .attr("style", "font-weight: bold");
 
       // create a row for each object in the data
-      var rows = tbody.selectAll("tr")
+      let rows = tbody.selectAll("tr")
           .data(data)
           .enter()
           .append("tr");
 
       // create a cell in each row for each column
-      var cells = rows.selectAll("td")
+      let cells = rows.selectAll("td")
           .data(function(row) {
               return columns.map(function(column) {
-                  return {column: column, value: row[column]};
+                  return {column: column, value: roundHelper(row[column])};
               });
           })
           .enter()
           .append("td")
           .attr("style", "font-family: Courier") // sets the font style
-              .html(function(d) { return d.value; });
+              .html(function(d) { 
+                  return d.value; 
+              });
       
       return table;
     }
 
-  var keyMetrics = tabulate(data, ['data.name', 'data.symbol', 'data.quote.USD.price' ,'data.quote.USD.volume_24h'], ['Currency', 'Ticker', 'Price' ,'Volume 24h'])
+  let keyMetrics = tabulate(data, 
+      ['data.name', 'data.symbol', 'data.quote.USD.price', 'data.quote.USD.percent_change_24h', 
+      'data.quote.USD.market_cap','data.quote.USD.volume_24h', 'data.circulating_supply'], 
+      ['Currency', 'Ticker', 'Price', 'Price % Change 24h', 'Market_cap', 'Volume 24h', 'Value Locked' ])
 
 });
 

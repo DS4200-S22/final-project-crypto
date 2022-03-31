@@ -93,4 +93,36 @@ h1, h2, h3 {
 }
 
 #info-table {
+  font-size: 16px;
+  font-weight: bold;
+  line-height: 1.4em;
+  font-style: normal;
+  border-collapse: collapse;
+  border-spacing: 0.7rem;
+  width: 30%;
+}
+
+#info-table th, td{
+	border: 1px solid black; 
+	text-align: center;
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+
+#info-table tbody{
+  background-color: #ffffff; 
+}
+
+#info-table tbody tr:nth-child(even){
+	background-color: #99ccff; 
+}
+#info-table thead{
+  background-color: #3399ff;
+  color: #ffffff;
+}
+
+#info-table thead tr:nth-child(odd){
+  ..background-color: #ffffff;
+
 }
