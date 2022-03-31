@@ -88,14 +88,9 @@ h1, h2, h3 {
 /*----------- Visulations -----------*/
 
 #pie-and-bump {
-	float: left;
-	width: 50%;
-	justify-content: center;
+	display: block;
+	margin: auto;
 }
 
 #info-table {
-	float: right;
-	width: 50%;
-	align-items: center;
-	fill: rgb(0, 0, 255);
 }

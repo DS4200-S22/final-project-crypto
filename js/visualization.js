@@ -2,6 +2,7 @@
 d3.csv("data/crypto_data.csv").then((data) => {
     console.log(data)
 
+    // ------------------------------------- Pie Chart
     const xkey = 'data.symbol'
     const ykey = 'percent_of_total_marketcap'
 
@@ -13,7 +14,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
     });
 
     // set the dimensions and margins of the graph
-    const width = 700, height = 500, margin = 10;
+    const width = 700, height = 500, margin = 0;
 
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     const radius = Math.min(width, height) / 2 - margin;
@@ -23,8 +24,10 @@ d3.csv("data/crypto_data.csv").then((data) => {
       .append("svg")
         .attr("width", width)
         .attr("height", height)
+        .attr("style", "margin: 0 auto; display: block")
       .append("g")
         .attr("transform", `translate(${width/2}, ${height/2})`);
+
 
     // set the color scale
     const color = d3.scaleOrdinal()
@@ -38,11 +41,11 @@ d3.csv("data/crypto_data.csv").then((data) => {
 
     const arc = d3.arc()
       .innerRadius(radius * 0)
-      .outerRadius(radius * 0.8)
+      .outerRadius(radius * 0.70)
 
     const outerArc = d3.arc()
-      .innerRadius(radius * 0.9)
-      .outerRadius(radius * 0.9)
+      .innerRadius(radius * 0.75)
+      .outerRadius(radius * 0.75)
 
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
     svg.selectAll('mySlices')
@@ -53,15 +56,6 @@ d3.csv("data/crypto_data.csv").then((data) => {
         .attr("stroke", "black")
         .style("stroke-width", "1px")
         .style("opacity", 0.75)
-
-    //svg.selectAll('mySlices')
-      //.data(data_ready)
-      //.join('text')
-      //.text(function(d){ return d.data.currency + ": " 
-      //                          + Math.round(d.data.market_cap * 100) + "%"})
-      //.attr("transform", function(d) { return `translate(${arcGenerator.centroid(d)})`})
-      //.style("text-anchor", "outerRadius")
-      //.style("font-size", 17)
 
   svg.selectAll('allPolylines')
     .data(data_ready)
@@ -83,7 +77,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
     .data(data_ready)
     .join('text')
       .text(function(d){ return d.data.currency + ": " 
-                          + Math.round(d.data.market_cap * 100) + "%"})
+                          + (Math.round(d.data.market_cap * 1000)/10) + "%"})
       .attr('transform', function(d) {
          const pos = outerArc.centroid(d);
          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
@@ -94,6 +88,47 @@ d3.csv("data/crypto_data.csv").then((data) => {
           const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
           return (midangle < Math.PI ? 'start' : 'end')
         })
+
+  //----------------------------------------------------  Info Table 
+  // The table generation function
+  function tabulate(data, columns, columns_names) {
+      var table = d3.select("#info-table").append("table")
+              .attr("style", "margin-left: 0"),
+          thead = table.append("thead"),
+          tbody = table.append("tbody");
+
+      // append the header row
+      thead.append("tr")
+          .selectAll("th")
+          .data(columns_names)
+          .enter()
+          .append("th")
+              .text(function(column) { return column; });
+
+      // create a row for each object in the data
+      var rows = tbody.selectAll("tr")
+          .data(data)
+          .enter()
+          .append("tr");
+
+      // create a cell in each row for each column
+      var cells = rows.selectAll("td")
+          .data(function(row) {
+              return columns.map(function(column) {
+                  return {column: column, value: row[column]};
+              });
+          })
+          .enter()
+          .append("td")
+          .attr("style", "font-family: Courier") // sets the font style
+              .html(function(d) { return d.value; });
+      
+      return table;
+    }
+
+  var keyMetrics = tabulate(data, ['data.name', 'data.symbol', 'data.quote.USD.price' ,'data.quote.USD.volume_24h'], ['Currency', 'Ticker', 'Price' ,'Volume 24h'])
+
 });
+
 
 
