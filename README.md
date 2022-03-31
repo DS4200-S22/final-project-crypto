@@ -6,6 +6,10 @@ This template is the starting point for your final project's webpage. Please rea
 
 https://ds4200-s22.github.io/final-project-crypto/
 
+## Link to Project Document
+
+https://docs.google.com/document/d/1aTt7FvUAo91NZCqfb79QK5hK5_NGdwqR/edit?usp=sharing&ouid=106997097544726173389&rtpof=true&sd=true
+
 ## Setup
 
 1. Clone this repository to your local machine.
