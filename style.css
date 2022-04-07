@@ -87,10 +87,81 @@ h1, h2, h3 {
 
 /*----------- Visulations -----------*/
 
-#pie-and-bump {
+/* -- pie -- */
+
+#pie {
 	display: block;
 	margin: auto;
 }
+
+/* -- bump -- */
+
+.click-active, .active {
+  opacity: 1.0;
+  stroke-opacity: 1.0;
+  z-index: 1000;
+  /*r: 8;*/
+}
+
+path.click-active {
+  stroke-width: 3.0;
+}
+
+path.active {
+  stroke-width: 3.0;
+}
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+
+.x.axis path {
+  
+}
+
+.tooltip {
+  position: absolute;
+  padding: 10px;
+  font: 12px sans-serif;
+  background: #222;
+  color: #fff;
+  border: 0px;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0.9;
+  visibility: hidden;
+}
+
+
+.united-states {
+    fill: blue;
+    stroke: blue;
+}
+
+.mexico {
+    fill: green;
+    stroke: green;
+}
+
+.canada {
+    fill: red;
+    stroke: red;
+}
+
+.china {
+    fill:  yellow;
+    stroke: yellow;
+}
+
+/* -- table -- */
 
 #info-table {
   font-size: 16px;

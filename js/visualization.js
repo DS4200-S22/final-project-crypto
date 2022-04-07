@@ -1,6 +1,5 @@
 //read in data
 d3.csv("data/crypto_data.csv").then((data) => {
-    console.log(data)
 
     // ------------------------------------- Pie Chart
     const xkey = 'data.symbol'
@@ -20,7 +19,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
     const radius = Math.min(width, height) / 2 - margin;
 
     // append the svg object to the div called '#pie-and-pump'
-    const svg = d3.select("#pie-and-bump")
+    const svg = d3.select("#pie")
       .append("svg")
         .attr("width", width)
         .attr("height", height)
@@ -57,37 +56,37 @@ d3.csv("data/crypto_data.csv").then((data) => {
         .style("stroke-width", "1px")
         .style("opacity", 0.75)
 
-  svg.selectAll('allPolylines')
-    .data(data_ready)
-    .join('polyline')
-      .attr("stroke", "black")
-      .style("fill", "none")
-      .attr("stroke-width", 1)
-      .attr('points', function(d) {
-        const posA = arc.centroid(d) // line insertion in the slice
-        const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
-        const posC = outerArc.centroid(d); // Label position = almost the same as posB
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
-        posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
-        return [posA, posB, posC]
-      })
+    svg.selectAll('allPolylines')
+      .data(data_ready)
+      .join('polyline')
+        .attr("stroke", "black")
+        .style("fill", "none")
+        .attr("stroke-width", 1)
+        .attr('points', function(d) {
+          const posA = arc.centroid(d) // line insertion in the slice
+          const posB = outerArc.centroid(d) // line break: we use the other arc generator that has been built only for that
+          const posC = outerArc.centroid(d); // Label position = almost the same as posB
+          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2 // we need the angle to see if the X position will be at the extreme right or extreme left
+          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
+          return [posA, posB, posC]
+        })
 
-  // Add the polylines between chart and labels:
-  svg.selectAll('allLabels')
-    .data(data_ready)
-    .join('text')
-      .text(function(d){ return d.data.currency + ": " 
-                          + (Math.round(d.data.market_cap * 1000)/10) + "%"})
-      .attr('transform', function(d) {
-         const pos = outerArc.centroid(d);
-         const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-         pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-         return `translate(${pos})`;
-        })
-      .style('text-anchor', function(d) {
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
-          return (midangle < Math.PI ? 'start' : 'end')
-        })
+    // Add the polylines between chart and labels:
+    svg.selectAll('allLabels')
+      .data(data_ready)
+      .join('text')
+        .text(function(d){ return d.data.currency + ": " 
+                            + (Math.round(d.data.market_cap * 1000)/10) + "%"})
+        .attr('transform', function(d) {
+           const pos = outerArc.centroid(d);
+           const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+           pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
+           return `translate(${pos})`;
+          })
+        .style('text-anchor', function(d) {
+            const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
+            return (midangle < Math.PI ? 'start' : 'end')
+          })
 
   //----------------------------------------------------  Info Table 
 
@@ -153,6 +152,168 @@ d3.csv("data/crypto_data.csv").then((data) => {
       ['Currency', 'Ticker', 'Price', 'Price % Change 24h', 'Market_cap', 'Volume 24h', 'Value Locked' ])
 
 });
+
+ //----------------------------------------------------  Bump
+
+d3.csv("data/data_test.csv").then((data) => {
+  console.log(data)
+  
+  //Data set up _________________________________________
+
+  data.sort(function(a, b) {
+    if(b['year'] != a['year']) {
+      return b['year'] - a['year'];
+    }
+    if(b['money'] != a['money']) {
+      return b['money'] - a['money'];
+    }
+  });
+
+  let pos  = 1;
+  data[0].position = pos;
+  for(let i=1; i < data.length; i++) {
+    if(data[i-1].year != data[i].year) {
+      pos = 1;
+    } else {
+      pos++;
+    }
+    data[i].position = pos;
+  }
+
+  data.forEach(function(d) {
+    d['class'] = d['country'].toLowerCase().replace(/ /g, '-').replace(/\./g, '');
+  })
+
+  // Chart Size Setup _____________________________________
+  let margin = { top: 35, right: 0, bottom: 30, left: 70 };
+
+  let width = 960 - margin.left - margin.right;
+  let height = 500 - margin.top - margin.bottom;
+
+  let chart = d3.select(".chart")
+      .attr("width", 960)
+      .attr("height", 500)
+      .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  // Scales _____________________________________
+  let x = d3.scaleBand()
+      .domain(data.map(function(d) { return d['year']; }).reverse())
+      .rangeRound([margin.left + 30, width - margin.right]);
+
+  let y = d3.scaleLinear()
+      .domain([d3.min(data, function(d) { return d['position'] }), d3.max(data, function(d) { return d['position']; })])
+      .range([20, height - 30]);
+
+  let size = d3.scaleLinear()
+      .domain(d3.extent(data, function(d) { return d['money']; }))
+      .range([3, 10]);
+
+  // Axis _____________________________________
+  let xAxis = d3.axisBottom(x);
+
+  let yAxis = d3.axisLeft(y);
+
+  chart.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(-"+ x.bandwidth()/2.0 +"," + height + ")")
+      .call(xAxis);
+
+  chart.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
+
+  // Title _____________________________________
+  chart.append("text")
+    .text('Hello World')
+    .attr("text-anchor", "middle")
+    .attr("class", "graph-title")
+    .attr("y", -10)
+    .attr("x", width / 2.0);
+
+  chart.append("text")
+    .text('Money')
+    .attr("text-anchor", "middle")
+    .attr("class", "graph-title")
+    .attr("y", -35)
+    .attr("x", width / -4.0)
+    .attr("transform", "rotate(-90)");
+
+  // Lines  _____________________________________
+  let clubs = data.map(d => d.country);
+  
+  clubs.forEach(function(country) {
+    let currData = data.filter(function(d) {
+      if(d.country == country) {
+        return d;
+      }
+    });
+
+    let line = d3.line()
+        .x(function(d) { return x(d.year); })
+        .y(function(d) { return y(d.position); });
+
+    chart.append("path")
+        .datum(currData)
+        .attr("class", country.toLowerCase().replace(/ /g, '-').replace(/\./g,''))
+        .attr("style", "fill:none !important")
+        .attr("stroke-linejoin", "round")
+        .attr("stroke-linecap", "round")
+        .attr("stroke-width", 2)
+        .attr("stroke-opacity", 0.1)
+        .attr("d", line);
+  });
+  // Nodes _____________________________________
+  let node = chart.append("g")
+    .selectAll("circle")
+    .data(data)
+    .enter().append("circle")
+    .attr("class", "point")
+    .attr("cx", function(d) { return x(d['year']); })
+    .attr("cy", function(d) { return y(d['position']); })
+    .attr('fill', 'blue')
+    // replace spaces with - and remove '.' (from d.c. united)
+    .attr("class", function(d) { return d.country.toLowerCase().replace(/ /g, '-').replace(/\./g,'') })
+    .attr("r", 6)
+    //.attr("r", function(d) { return size(d['goals_for']) })
+    .attr("stroke-width", 1.5)
+    .attr('opacity', '0.6');
+
+  // Tooltips _____________________________________
+  let tooltip = d3.select("body").append("div")
+      .attr("class", "tooltip");
+
+  chart.selectAll("circle")
+      .on("mouseover", function(event, d) {
+        chart.selectAll('.' + d['class'])
+            .classed('active', true);
+
+        let tooltip_str = "Country: " + d.country +
+                "<br/>" + "Year: " + d.year +
+                "<br/>" + "Money: " + d.money;
+
+        tooltip.html(tooltip_str)
+            .style("visibility", "visible");
+      })
+      .on("mousemove", function(event, d) {
+        tooltip.style("top", event.pageY - (tooltip.node().clientHeight + 5) + "px")
+            .style("left", event.pageX - (tooltip.node().clientWidth / 2.0) + "px");
+      })
+      .on("mouseout", function(event, d) {
+        chart.selectAll('.'+d['class'])
+            .classed('active', false);
+
+        tooltip.style("visibility", "hidden");
+      })
+      .on('click', function(event, d) {
+        chart.selectAll('.' + d['class'])
+            .classed('click-active', function(d) {
+              // toggle state
+              return !d3.select(this).classed('click-active');
+            });
+      })
+
+})
 
 
 
