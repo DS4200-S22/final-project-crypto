@@ -141,24 +141,98 @@ path.active {
 }
 
 
-.united-states {
-    fill: blue;
-    stroke: blue;
+.aave {
+  fill: #AF2626;
+  stroke: #0A174A;
+}
+.ada {
+  fill: #91022D;
+  stroke: #85B7EA;
+}
+.atom {
+  fill: #FFDB00;
+  stroke: #000000;
+}
+.bnb {
+  fill: #DD0000;
+  stroke: #000000;
+}
+.btc {
+  fill: #CF0032;
+  stroke: #07175C;
+}
+.cro {
+  fill: #F36600;
+  stroke: #85b7EA;
+}
+.doge {
+  fill: #00245D;
+  stroke: #FFD200;
+}
+.dot {
+  fill: #122089;
+  stroke: #7A878F;
+}
+.eos {
+  fill: #0A2141;
+  stroke: #D80016;
+}
+.eth {
+  fill: #6CADDF;
+  stroke: #00285E;
+}
+.link {
+  fill: #FFFFFF;
+  stroke: #D50031;
+}
+.ltc {
+  fill: #633492;
+  stroke: #FDE192;
+}
+.miota {
+  fill: #B18500;
+  stroke: #348AE1;
+}
+.sol {
+  fill: #004812;
+  stroke: #EBE72B;
+}
+.trx {
+  fill: #F2D11A;
+  stroke: #A50531;
+}
+.uni {
+  fill: #0051BA;
+  stroke: #000000;
+}
+.usdc {
+  fill: #4F8A10;
+  stroke: #11568C;
+}
+.usdt {
+  fill: #91B0D5;
+  stroke: #002B5C;
+}
+.wbtc {
+  fill: #D80016;
+  stroke: #313F49;
+}
+.xem {
+  fill: #12264C;
+  stroke: #85B7EA;
 }
 
-.mexico {
-    fill: green;
-    stroke: green;
+.xlm { 
+  fill: #092C5C;
+  stroke: #8FBCE6;
 }
-
-.canada {
-    fill: red;
-    stroke: red;
+.xmr {
+  fill: #0077C8;
+  stroke: #FFD100;
 }
-
-.china {
-    fill:  yellow;
-    stroke: yellow;
+.xrp {
+  fill: #FFF;
+  stroke: #0A2141;
 }
 
 /* -- table -- */
