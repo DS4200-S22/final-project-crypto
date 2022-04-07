@@ -155,24 +155,22 @@ d3.csv("data/crypto_data.csv").then((data) => {
 
  //----------------------------------------------------  Bump
 
-d3.csv("data/data_test.csv").then((data) => {
-  console.log(data)
-  
+d3.csv("data/price_q.csv").then((data) => {
   //Data set up _________________________________________
 
   data.sort(function(a, b) {
-    if(b['year'] != a['year']) {
-      return b['year'] - a['year'];
+    if( new Date(b['date']) != new Date(a['date'])) {
+      return new Date(b['date']) - new Date(a['date']);
     }
-    if(b['money'] != a['money']) {
-      return b['money'] - a['money'];
+    if(b['close'] != a['close']) {
+      return b['close'] - a['close'];
     }
   });
 
   let pos  = 1;
   data[0].position = pos;
   for(let i=1; i < data.length; i++) {
-    if(data[i-1].year != data[i].year) {
+    if(data[i-1].date != data[i].date) {
       pos = 1;
     } else {
       pos++;
@@ -181,7 +179,7 @@ d3.csv("data/data_test.csv").then((data) => {
   }
 
   data.forEach(function(d) {
-    d['class'] = d['country'].toLowerCase().replace(/ /g, '-').replace(/\./g, '');
+    d['class'] = d['ticker'].toLowerCase().replace(/ /g, '-').replace(/\./g, '');
   })
 
   // Chart Size Setup _____________________________________
@@ -192,21 +190,21 @@ d3.csv("data/data_test.csv").then((data) => {
 
   let chart = d3.select(".chart")
       .attr("width", 960)
-      .attr("height", 500)
+      .attr("height", 600)
       .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   // Scales _____________________________________
   let x = d3.scaleBand()
-      .domain(data.map(function(d) { return d['year']; }).reverse())
-      .rangeRound([margin.left + 30, width - margin.right]);
+      .domain(data.map(function(d) { return new Date(d['date']); }).reverse())
+      .rangeRound([25, width - margin.right]);
 
   let y = d3.scaleLinear()
       .domain([d3.min(data, function(d) { return d['position'] }), d3.max(data, function(d) { return d['position']; })])
       .range([20, height - 30]);
 
   let size = d3.scaleLinear()
-      .domain(d3.extent(data, function(d) { return d['money']; }))
+      .domain(d3.extent(data, function(d) { return d['close']; }))
       .range([3, 10]);
 
   // Axis _____________________________________
@@ -217,7 +215,12 @@ d3.csv("data/data_test.csv").then((data) => {
   chart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(-"+ x.bandwidth()/2.0 +"," + height + ")")
-      .call(xAxis);
+      .call(xAxis)
+      .selectAll("text")
+        .attr("x", 9)
+        .attr("y", -1)
+        .attr("transform", "rotate(90)")
+        .style("text-anchor", "start")
 
   chart.append("g")
       .attr("class", "y axis")
@@ -225,14 +228,14 @@ d3.csv("data/data_test.csv").then((data) => {
 
   // Title _____________________________________
   chart.append("text")
-    .text('Hello World')
+    .text('Price Rankings Vs Quarter')
     .attr("text-anchor", "middle")
     .attr("class", "graph-title")
     .attr("y", -10)
     .attr("x", width / 2.0);
 
   chart.append("text")
-    .text('Money')
+    .text('Rank')
     .attr("text-anchor", "middle")
     .attr("class", "graph-title")
     .attr("y", -35)
@@ -240,22 +243,22 @@ d3.csv("data/data_test.csv").then((data) => {
     .attr("transform", "rotate(-90)");
 
   // Lines  _____________________________________
-  let clubs = data.map(d => d.country);
-  
-  clubs.forEach(function(country) {
+  let tickers = data.map(d => d.ticker);
+
+  tickers.forEach(function(ticker) {
     let currData = data.filter(function(d) {
-      if(d.country == country) {
+      if(d.ticker == ticker) {
         return d;
       }
     });
 
     let line = d3.line()
-        .x(function(d) { return x(d.year); })
+        .x(function(d) { return x(new Date(d.date)); })
         .y(function(d) { return y(d.position); });
 
     chart.append("path")
         .datum(currData)
-        .attr("class", country.toLowerCase().replace(/ /g, '-').replace(/\./g,''))
+        .attr("class", ticker.toLowerCase())
         .attr("style", "fill:none !important")
         .attr("stroke-linejoin", "round")
         .attr("stroke-linecap", "round")
@@ -269,11 +272,11 @@ d3.csv("data/data_test.csv").then((data) => {
     .data(data)
     .enter().append("circle")
     .attr("class", "point")
-    .attr("cx", function(d) { return x(d['year']); })
-    .attr("cy", function(d) { return y(d['position']); })
+    .attr("cx", function(d) { return x(new Date(d.date)); })
+    .attr("cy", function(d) { return y(d.position); })
     .attr('fill', 'blue')
     // replace spaces with - and remove '.' (from d.c. united)
-    .attr("class", function(d) { return d.country.toLowerCase().replace(/ /g, '-').replace(/\./g,'') })
+    .attr("class", function(d) { return d.ticker.toLowerCase() })
     .attr("r", 6)
     //.attr("r", function(d) { return size(d['goals_for']) })
     .attr("stroke-width", 1.5)
@@ -288,9 +291,9 @@ d3.csv("data/data_test.csv").then((data) => {
         chart.selectAll('.' + d['class'])
             .classed('active', true);
 
-        let tooltip_str = "Country: " + d.country +
-                "<br/>" + "Year: " + d.year +
-                "<br/>" + "Money: " + d.money;
+        let tooltip_str = "Symbol: " + d.ticker +
+                "<br/>" + "Monthly Ave Price: " + d.close + 
+                "<br/>" + "Quarter: " + d.date;
 
         tooltip.html(tooltip_str)
             .style("visibility", "visible");
