@@ -5,15 +5,17 @@ d3.csv("data/crypto_data.csv").then((data) => {
     const xkey = 'data.symbol'
     const ykey = 'percent_of_total_marketcap'
 
-    const market_cap = data.map(function(d) {
+    let market_cap_map = data.map(function(d) {
       return {
         currency: d[xkey],
         market_cap: d[ykey]
       }
-    });
+    }); 
+
+    let market_cap = market_cap_map.slice(0, 15)
 
     // set the dimensions and margins of the graph
-    const width = 700, height = 500, margin = 0;
+    const width = 800, height = 500, margin = 0;
 
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     const radius = Math.min(width, height) / 2 - margin;
@@ -24,7 +26,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
         .attr("width", width)
         .attr("height", height)
         .attr("style", "margin: 0 auto; display: block")
-      .append("g")
+        .append("g")
         .attr("transform", `translate(${width/2}, ${height/2})`);
 
 
@@ -32,19 +34,24 @@ d3.csv("data/crypto_data.csv").then((data) => {
     const color = d3.scaleOrdinal()
       .range(d3.schemeSet2)
 
+
     // Compute the position of each group on the pie:
     const pie = d3.pie()
       .value(function(d) {return d.market_cap})
-
-    const data_ready = pie(market_cap)
+      
+    let data_ready = pie(market_cap)
 
     const arc = d3.arc()
       .innerRadius(radius * 0)
-      .outerRadius(radius * 0.70)
+      .outerRadius(radius * 0.60)
 
     const outerArc = d3.arc()
       .innerRadius(radius * 0.75)
       .outerRadius(radius * 0.75)
+
+    const arcHighlight = d3.arc()
+      .innerRadius(radius * 0)
+      .outerRadius(radius * 0.70)
 
     // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
     svg.selectAll('mySlices')
@@ -55,6 +62,8 @@ d3.csv("data/crypto_data.csv").then((data) => {
         .attr("stroke", "black")
         .style("stroke-width", "1px")
         .style("opacity", 0.75)
+        .on("mouseover", sliceHovered)
+        .on("mouseout", sliceUnhovered)
 
     svg.selectAll('allPolylines')
       .data(data_ready)
@@ -70,6 +79,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
           posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1); // multiply by 1 or -1 to put it on the right or on the left
           return [posA, posB, posC]
         })
+        .style("opacity", 0.5);
 
     // Add the polylines between chart and labels:
     svg.selectAll('allLabels')
@@ -87,6 +97,9 @@ d3.csv("data/crypto_data.csv").then((data) => {
             const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2
             return (midangle < Math.PI ? 'start' : 'end')
           })
+        .style("opacity", 0.5);
+
+
 
   //----------------------------------------------------  Info Table 
 
@@ -105,6 +118,8 @@ d3.csv("data/crypto_data.csv").then((data) => {
         return rounded;
       }
   }
+
+  let data_slice = data.slice(0, 15)
 
   // The table generation function
   function tabulate(data, columns, columns_names) {
@@ -127,7 +142,15 @@ d3.csv("data/crypto_data.csv").then((data) => {
       let rows = tbody.selectAll("tr")
           .data(data)
           .enter()
-          .append("tr");
+          .append("tr")
+          .on("mouseover", function() {
+            rows.classed("highlight", false);
+            d3.select(this).classed("highlight", true);
+          })
+          .on("mouseout", function() {
+            rows.classed("highlight", false)
+          })
+
 
       // create a cell in each row for each column
       let cells = rows.selectAll("td")
@@ -146,12 +169,39 @@ d3.csv("data/crypto_data.csv").then((data) => {
       return table;
     }
 
-  let keyMetrics = tabulate(data, 
+  let keyMetrics = tabulate(data_slice, 
       ['data.name', 'data.symbol', 'data.quote.USD.price', 'data.quote.USD.percent_change_24h', 
       'data.quote.USD.market_cap','data.quote.USD.volume_24h', 'data.circulating_supply'], 
       ['Currency', 'Ticker', 'Price', 'Price % Change 24h', 'Market_cap', 'Volume 24h', 'Value Locked' ])
 
+  function sliceHovered(event, object) {
+    //selct slice
+    d3.select(this)
+      .transition()
+      .attr('d', arcHighlight(object))
+
+    keyMetrics.selectAll("tr").selectAll("td")
+      .filter((d, i) =>
+        d.column == "data.symbol" & d.value == object.data.currency)
+      .classed('highlight', true)
+  }
+
+  function sliceUnhovered(event, object) {
+    //console.log(object.data.currency)
+    //selct slice
+    d3.select(this)
+      .transition()
+      .attr('d', arc(object))
+
+    keyMetrics.selectAll("tr").selectAll("td")
+      .filter((d, i) => 
+          //console.log(d))
+          d.column == "data.symbol" & d.value == object.data.currency)
+      .classed('highlight', false);
+  }
 });
+
+
 
  //----------------------------------------------------  Bump
 
