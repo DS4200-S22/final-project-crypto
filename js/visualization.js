@@ -15,7 +15,7 @@ d3.csv("data/crypto_data.csv").then((data) => {
     let market_cap = market_cap_map.slice(0, 15)
 
     // set the dimensions and margins of the graph
-    const width = 800, height = 500, margin = 0;
+    const width = 700, height = 500, margin = 0;
 
     // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
     const radius = Math.min(width, height) / 2 - margin;
@@ -262,14 +262,16 @@ d3.csv("data/price_q.csv").then((data) => {
 
   let yAxis = d3.axisLeft(y);
 
+  const qPares = d3.utc
+
   chart.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(-"+ x.bandwidth()/2.0 +"," + height + ")")
-      .call(xAxis)
+      .call(xAxis.tickFormat(d3.timeFormat("Q%q-%Y")))
       .selectAll("text")
         .attr("x", 9)
         .attr("y", -1)
-        .attr("transform", "rotate(90)")
+        .attr("transform", "rotate(45)")
         .style("text-anchor", "start")
 
   chart.append("g")
@@ -342,7 +344,7 @@ d3.csv("data/price_q.csv").then((data) => {
             .classed('active', true);
 
         let tooltip_str = "Symbol: " + d.ticker +
-                "<br/>" + "Monthly Ave Price: " + d.close + 
+                "<br/>" + "Quarterly Average Price: " + d.close + 
                 "<br/>" + "Quarter: " + d.date;
 
         tooltip.html(tooltip_str)

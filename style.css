@@ -39,6 +39,13 @@ h1, h2, h3 {
   column-gap: 50px;
 }
 
+.flex-container-charts {
+  display: flex;
+  flex-direction: row;
+  column-gap: 100 px;
+  justify-content: flex-start;
+}
+
 /* Metric Definitions */
 .metric-holder {
 	border: 2px solid black;
@@ -92,8 +99,9 @@ h1, h2, h3 {
 /* -- pie -- */
 
 #pie {
+  width: 700px;
 	display: block;
-	margin: auto;
+	margin: 0;
 }
 
 .selected {
@@ -101,6 +109,14 @@ h1, h2, h3 {
 }}
 
 /* -- bump -- */
+
+#bump {
+  margin: 0 auto;
+}
+
+.chart {
+  justify-self: center;
+}
 
 .click-active, .active {
   opacity: 1.0;

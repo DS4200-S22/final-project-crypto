@@ -57,13 +57,13 @@
   <div class='flex-container'>
     <div class='metric-holder' id='metric-holder-1'>
       <text class='metric-text-title'>Total Market Cap </text>
-      <text class='metric-text'><br/> $100,000,000</text>
+      <text class='metric-text'><br/> $1,900,000,000,000</text>
       <span class='metric-tool-tip'> Market capitalization (or market cap) is the total dollar value of all the shares of a company’s stock — or, in the case of Bitcoin or another cryptocurrency, of all the coins that have been mined. In crypto, market cap is calculated by multiplying the total number of coins that have been mined by the price of a single coin at any given time.
       <a href='https://www.coinbase.com/learn/crypto-basics/what-is-market-cap' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
     <div class='metric-holder' id='metric-holder-2'>
       <text class='metric-text-title'>Market Cap % Change (24 hr)</text>
-      <text class='metric-text'><br/>-3.97% </text>
+      <text class='metric-text'><br/> +2.68% </text>
       <span class='metric-tool-tip'> 24-hour change in market cap is calculated by taking the current market cap of a cryptocurreny in a chosen base currency and comparing it with the market cap that this cryptocurrency was registering 24 hours ago.   
         <a href='https://www.coindesk.com/markets/2017/07/24/crypto-assets-trade-247-and-that-changes-more-than-uptime/#:~:text=In%20the%20simplest%20terms%2C%20it,volatility%20from%20the%20day%20before.' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
@@ -75,12 +75,12 @@
     </div>
     <div class='metric-holder' id='metric-holder-4'>
       <text class='metric-text-title'>Volume (24 hr)</text>
-      <text class='metric-text'><br/>$100,000,000</text>
+      <text class='metric-text'><br/>$83,670,000,000</text>
       <span class='metric-tool-tip'> The definition of volume is how much cryptocurrency has been traded over a set period. In this case the set period is 24 hours. <a href='https://coinmarketcap.com/alexandria/glossary/volume' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
     <div class='metric-holder' id='metric-holder-5'>
       <text class='metric-text-title'>Total Value Locked</text>
-      <text class='metric-text'><br/>$100,000,000</text>
+      <text class='metric-text'><br/>$188,000,000,000</text>
       <span class='metric-tool-tip'> Total value locked represents the number of assets that are currently being staked in a specific protocol.   
         <a href='https://www.coindesk.com/learn/why-tvl-matters-in-defi-total-value-locked-explained/#:~:text=Total%20value%20locked%20(TVL)%20is,sector%20of%20the%20crypto%20industry.' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
@@ -88,28 +88,33 @@
 </div>
 
 
-<div class="flex-container">
-  <div class="float-child" id="pie">
-    <h2>Pie Chart</h2>
-      <p> The below price chart shows the top 24 for coins and their current market share.  If you would like to see what each coin is name please hover over each coins area and their key metrics table to the right.</p>
+
+<div class="flex-container-charts">
+  <div id="pie">
+    <h2> % Market Cap by Curency </h2>
+      <p> The below pie chart shows the top 15 coins by their current market share. Highlight over a slice to lean more in the table.</p>
+
   </div>
 
-  <div class="float-child"id="info-table">
+  <div id="info-table">
     <h2>Key Metrics</h2>
      <p> This table shows the top 24 coins and their key metrics. To see the definition of these metrics please look above. </p>
   </div>
 </div>
 
-<div id="bump">
+
+<div class="flex-container" id="bump">
   <h2>Bump Chart</h2>
     <p> This Bump Chart shows each coins rankings and how they have changed each quarter. The bump chart price ranking is in desending order, therefore the highest ranked coin is at the top. Each node signifies the end of the quarter and if you hover them you can see three things: the coin, it's montly average price, and the quarter. 
   <svg class='chart'></svg>
 </div>
 
+
     <h2>Candlestick Chart </h2>
       <p> This candlestick chart shows a way for people to analysis the prervious and current price of each coin. With this information people are able to predict the future value of the coin more accurately. The blue bars signify positive increases since the last week's close, while the grey bars signify an increase since the last week's close. This is the most common chart used when conducting technical analysis of a coin. 
         The main thing people look at when they analyze price charts are historic trends that tend to repeat themselves. For example, a strong sign that a coin is going to improve is if the new weekly lows are higher than last weeks lows. In this case even if the highs are not improving significantly you can tell people are buying the coins before the price gets too low, which could potentially be a bullish sign. This is just one example, but there are a variety of things to analyze in this cart. To learn more about technical analysis <a href='https://www.sofi.com/learn/content/crypto-technical-analysis/#:~:text=Crypto%20technical%20analysis%20involves%20using,same%20course%20for%20some%20time.' target="_blank" rel="noopener noreferrer">click here.</a> </p>
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
