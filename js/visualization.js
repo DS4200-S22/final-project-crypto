@@ -329,7 +329,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	theme: "light2", // "light1", "light2", "dark1", "dark2"
 	exportEnabled: true,
 	title: {
-		text: "Bitcoin Price Chart 2020"
+		text: "Bitcoin Price Chart"
 	},
 	subtitles: [{
 		text: "Weekly Averages"
@@ -352,7 +352,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	}]
 });
 
-$.get("/data/testbitcoin.csv", getDataPointsFromCSV);
+$.get("/data/btcdata.csv", getDataPointsFromCSV);
 
 function getDataPointsFromCSV(csv) {
 	var csvLines = points = [];
