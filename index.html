@@ -56,13 +56,13 @@
   <div class='flex-container'>
     <div class='metric-holder' id='metric-holder-1'>
       <text class='metric-text-title'>Total Market Cap </text>
-      <text class='metric-text'><br/> $100,000,000</text>
+      <text class='metric-text'><br/> $1,900,000,000,000</text>
       <span class='metric-tool-tip'> Market capitalization (or market cap) is the total dollar value of all the shares of a company’s stock — or, in the case of Bitcoin or another cryptocurrency, of all the coins that have been mined. In crypto, market cap is calculated by multiplying the total number of coins that have been mined by the price of a single coin at any given time.
       <a href='https://www.coinbase.com/learn/crypto-basics/what-is-market-cap' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
     <div class='metric-holder' id='metric-holder-2'>
       <text class='metric-text-title'>Market Cap % Change (24 hr)</text>
-      <text class='metric-text'><br/>-3.97% </text>
+      <text class='metric-text'><br/> +2.68% </text>
       <span class='metric-tool-tip'> 24-hour change in market cap is calculated by taking the current market cap of a cryptocurreny in a chosen base currency and comparing it with the market cap that this cryptocurrency was registering 24 hours ago.   
         <a href='https://www.coindesk.com/markets/2017/07/24/crypto-assets-trade-247-and-that-changes-more-than-uptime/#:~:text=In%20the%20simplest%20terms%2C%20it,volatility%20from%20the%20day%20before.' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
@@ -74,12 +74,12 @@
     </div>
     <div class='metric-holder' id='metric-holder-4'>
       <text class='metric-text-title'>Volume (24 hr)</text>
-      <text class='metric-text'><br/>$100,000,000</text>
+      <text class='metric-text'><br/>$83,670,000,000</text>
       <span class='metric-tool-tip'> The definition of volume is how much cryptocurrency has been traded over a set period. In this case the set period is 24 hours. <a href='https://coinmarketcap.com/alexandria/glossary/volume' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
     <div class='metric-holder' id='metric-holder-5'>
       <text class='metric-text-title'>Total Value Locked</text>
-      <text class='metric-text'><br/>$100,000,000</text>
+      <text class='metric-text'><br/>$188,000,000,000</text>
       <span class='metric-tool-tip'> Total value locked represents the number of assets that are currently being staked in a specific protocol.   
         <a href='https://www.coindesk.com/learn/why-tvl-matters-in-defi-total-value-locked-explained/#:~:text=Total%20value%20locked%20(TVL)%20is,sector%20of%20the%20crypto%20industry.' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
@@ -87,25 +87,26 @@
 </div>
 
 
-<div class="flex-container">
-  <div class="float-child" id="pie">
-    <h2>Pie Chart</h2>
-      <p> The below price chart shows the top 24 for coins and their current market share.  If you would like to see what each coin is name please hover over each coins area.</p>
+<div class="flex-container-charts">
+  <div id="pie">
+    <h2> % Market Cap by Curency </h2>
+      <p> The below pie chart shows the top 15 coins by their current market share. Highlight over a slice to lean more in the table.</p>
   </div>
 
-  <div class="float-child"id="info-table">
+  <div id="info-table">
     <h2>Key Metrics</h2>
   </div>
 </div>
 
-<div id="bump">
-  <h2>Bump Chart</h2>
+<div class="flex-container" id="bump">
   <svg class='chart'></svg>
 </div>
+
 
     <h2>Candlestick Chart </h2>
       <p> This candlestick chart shows a way for people to analysis the prervious and current price of each coin. With this information people are able to predict the future value of the coin more accurately. The blue bars signify positive increases since the last week's close, while the grey bars signify an increase since the last week's close. </p>
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
 
