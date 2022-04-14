@@ -11,9 +11,10 @@
   <!-- CSS Styling -->
   <link rel='stylesheet' href='style.css'>
 
-	<!-- Load plotly.js into the DOM -->
+	<!-- Load candlestick -->
 	<script src='https://cdn.plot.ly/plotly-2.11.1.min.js'></script>
-
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.stock.min.js"></script>
 
 </head>
 
@@ -87,24 +88,31 @@
 </div>
 
 
+
 <div class="flex-container-charts">
   <div id="pie">
     <h2> % Market Cap by Curency </h2>
       <p> The below pie chart shows the top 15 coins by their current market share. Highlight over a slice to lean more in the table.</p>
+
   </div>
 
   <div id="info-table">
     <h2>Key Metrics</h2>
+     <p> This table shows the top 24 coins and their key metrics. To see the definition of these metrics please look above. </p>
   </div>
 </div>
 
+
 <div class="flex-container" id="bump">
+  <h2>Bump Chart</h2>
+    <p> This Bump Chart shows each coins rankings and how they have changed each quarter. The bump chart price ranking is in desending order, therefore the highest ranked coin is at the top. Each node signifies the end of the quarter and if you hover them you can see three things: the coin, it's montly average price, and the quarter. 
   <svg class='chart'></svg>
 </div>
 
 
     <h2>Candlestick Chart </h2>
-      <p> This candlestick chart shows a way for people to analysis the prervious and current price of each coin. With this information people are able to predict the future value of the coin more accurately. The blue bars signify positive increases since the last week's close, while the grey bars signify an increase since the last week's close. </p>
+      <p> This candlestick chart shows a way for people to analysis the prervious and current price of each coin. With this information people are able to predict the future value of the coin more accurately. The blue bars signify positive increases since the last week's close, while the grey bars signify an increase since the last week's close. This is the most common chart used when conducting technical analysis of a coin. 
+        The main thing people look at when they analyze price charts are historic trends that tend to repeat themselves. For example, a strong sign that a coin is going to improve is if the new weekly lows are higher than last weeks lows. In this case even if the highs are not improving significantly you can tell people are buying the coins before the price gets too low, which could potentially be a bullish sign. This is just one example, but there are a variety of things to analyze in this cart. To learn more about technical analysis <a href='https://www.sofi.com/learn/content/crypto-technical-analysis/#:~:text=Crypto%20technical%20analysis%20involves%20using,same%20course%20for%20some%20time.' target="_blank" rel="noopener noreferrer">click here.</a> </p>
     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
@@ -125,7 +133,7 @@
   <h1>Visualization Explanation</h1>
   
   <p>
-    In the visualization on the top there are 5 key statistics with a hover menu that includes a description and a link to a website where the reader can learn more. The pie chart shows the top 100 cryptocurrencies and a percentage of each of their market shares.  The table shows the key metrics 24 coins by market cap.
+    In the visualization on the top there are 5 key statistics with a hover menu that includes a description and a link to a website where the reader can learn more. The pie chart shows the top 100 cryptocurrencies and a percentage of each of their market shares. The table shows the key metrics 24 coins by market cap. The bump chart shows Price Rankings in each quarter.  Lastly, the candlestick chart shows Bitcoin price chart in a weekly timeframe.
     <a href= 'https://docs.google.com/presentation/d/1n08gm1T13W0ijWvnUmY4ENVJfywNB2ZMdZQAYbS8wZQ/edit#slide=id.g9a3870889c_2_312'> Visualization Sketch </a>
   </p>
   
