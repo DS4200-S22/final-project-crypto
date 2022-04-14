@@ -432,11 +432,11 @@ var layout = {
   
   annotations: [
     {
-      x: '2017-01-31',
+      x: '2020-01-01',
       y: 0.9,
       xref: 'x',
       yref: 'paper',
-      text: 'largest movement',
+      text: '',
       font: {color: 'magenta'},
       showarrow: true,
       xanchor: 'right',
@@ -450,9 +450,9 @@ var layout = {
           type: 'rect',
           xref: 'x',
           yref: 'paper',
-          x0: '2017-01-31',
+          x0: '2020-01-01',
           y0: 0,
-          x1: '2017-02-01',
+          x1: '2020-01-01',
           y1: 1,
           fillcolor: '#d3d3d3',
           opacity: 0.2,
