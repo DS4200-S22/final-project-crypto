@@ -278,6 +278,10 @@ path.active {
   color: #ffffff;
 }
 
+#info-table: hover {
+  background-color: yellow;
+}
+
 .upGreenArrow{
    width: 0;
    height: 0;

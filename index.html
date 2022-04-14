@@ -14,6 +14,7 @@
 	<!-- Load plotly.js into the DOM -->
 	<script src='https://cdn.plot.ly/plotly-2.11.1.min.js'></script>
 
+
 </head>
 
 <!-- Main page content -->
@@ -80,14 +81,16 @@
       <text class='metric-text-title'>Total Value Locked</text>
       <text class='metric-text'><br/>$100,000,000</text>
       <span class='metric-tool-tip'> Total value locked represents the number of assets that are currently being staked in a specific protocol.   
-        <a href='https://coinmarketcap.com/alexandria/glossary/total-value-locked-tvl ' target="_blank" rel="noopener noreferrer">Learn More</a></span>
+        <a href='https://www.coindesk.com/learn/why-tvl-matters-in-defi-total-value-locked-explained/#:~:text=Total%20value%20locked%20(TVL)%20is,sector%20of%20the%20crypto%20industry.' target="_blank" rel="noopener noreferrer">Learn More</a></span>
     </div>
   </div>
 </div>
 
+
 <div class="flex-container">
   <div class="float-child" id="pie">
     <h2>Pie Chart</h2>
+      <p> The below price chart shows the top 24 for coins and their current market share.  If you would like to see what each coin is name please hover over each coins area.</p>
   </div>
 
   <div class="float-child"id="info-table">
@@ -99,9 +102,13 @@
   <h2>Bump Chart</h2>
   <svg class='chart'></svg>
 </div>
-  <h2>Candlestick Chart</h2>
-<div id='candlestick'><!-- Plotly chart will be drawn inside this DIV -->
-</div>
+
+    <h2>Candlestick Chart </h2>
+      <p> This candlestick chart shows a way for people to analysis the prervious and current price of each coin. With this information people are able to predict the future value of the coin more accurately. The blue bars signify positive increases since the last week's close, while the grey bars signify an increase since the last week's close. </p>
+    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+
 
 
 
