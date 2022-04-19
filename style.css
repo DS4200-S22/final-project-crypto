@@ -9,6 +9,10 @@ h1, h2, h3 {
 	line-height: 1.2
 }
 
+.notbold{
+    font-weight:normal
+}
+
 /* Temp Line Split*/
 .split-line {
 	size: 5;
