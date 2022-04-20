@@ -111,7 +111,9 @@ h1, h2, h3 {
 /* -- bump -- */
 
 #bump {
-  margin: 0 auto;
+  margin: auto;
+  width: 50%;
+
 }
 
 .chart {
